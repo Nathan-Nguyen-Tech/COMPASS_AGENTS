@@ -7,8 +7,12 @@ import json
 import math
 import os
 import sys
+import io
 from datetime import datetime
 import glob
+
+# Set UTF-8 encoding for Windows console
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
 
 def normalize_name(name):
@@ -94,11 +98,11 @@ def load_inventory_file(file_path):
     try:
         # Doc file
         if file_path.endswith('.xlsx'):
-            # Skip row 0, 1 va doc row 2 lam header
-            df = pd.read_excel(file_path, header=2)
+            # Row 3 la header thuc su (Ten kho, Ma hang, Ten hang, Mo ta, DVT, So luong)
+            df = pd.read_excel(file_path, header=3)
             print(f"[INFO] Doc file Excel: {file_path}")
         elif file_path.endswith('.csv'):
-            df = pd.read_csv(file_path, header=2)
+            df = pd.read_csv(file_path, header=3)
             print(f"[INFO] Doc file CSV: {file_path}")
         else:
             print(f"[ERROR] File phai la .xlsx hoac .csv")
@@ -107,31 +111,28 @@ def load_inventory_file(file_path):
         print(f"[DEBUG] Num columns: {len(df.columns)}")
         print(f"[DEBUG] Num rows: {len(df)}")
 
-        # Skip row 3 (sub-header "So luong")
-        # Row 3 sau khi skip 2 rows se la row 0 trong df
+        # Skip row 4 (sub-header blank)
+        # Row 4 sau khi doc header=3 se la row 0 trong df
         df = df.iloc[1:].reset_index(drop=True)
 
-        # Rename columns de chuan hoa
-        # Columns: Ten kho | Ma hang | Ten hang | DVT | Cuoi ky
-        # → Rename: Unnamed -> readable names
-
-        # Neu columns la Unnamed, rename
-        df.columns = ['Ten kho', 'Ma hang', 'Ten hang', 'DVT', 'So luong']
+        # Neu columns van la Unnamed (truong hop CSV), rename
+        if df.columns[0].startswith('Unnamed'):
+            df.columns = ['Tên kho', 'Mã hàng', 'Tên hàng', 'Mô tả', 'ĐVT', 'Số lượng']
 
         # Kiem tra cot
-        if 'Ten hang' not in df.columns or 'So luong' not in df.columns:
+        if 'Tên hàng' not in df.columns or 'Số lượng' not in df.columns:
             print(f"[ERROR] File khong dung cau truc")
             print(f"[INFO] Columns: {list(df.columns)}")
             return None
 
         # Loc bo rows trong (NaN)
-        df = df.dropna(subset=['Ten hang', 'So luong'])
+        df = df.dropna(subset=['Tên hàng', 'Số lượng'])
 
         # Chuan hoa ten
-        df['ten_chuan'] = df['Ten hang'].apply(normalize_name)
+        df['ten_chuan'] = df['Tên hàng'].apply(normalize_name)
 
         # Convert So luong sang float
-        df['So luong'] = pd.to_numeric(df['So luong'], errors='coerce').fillna(0)
+        df['Số lượng'] = pd.to_numeric(df['Số lượng'], errors='coerce').fillna(0)
 
         print(f"[INFO] Doc duoc {len(df)} dong tu file ton kho")
 
@@ -167,8 +168,8 @@ def compare_inventory(calculated_data, inventory_df):
         ton_kho_row = inventory_df[inventory_df['ten_chuan'] == ten_chuan]
 
         if not ton_kho_row.empty:
-            ton_kho_value = float(ton_kho_row.iloc[0]['So luong'])
-            dvt_ton_kho = str(ton_kho_row.iloc[0]['DVT']).strip().lower() if 'DVT' in ton_kho_row.iloc[0] else ''
+            ton_kho_value = float(ton_kho_row.iloc[0]['Số lượng'])
+            dvt_ton_kho = str(ton_kho_row.iloc[0]['ĐVT']).strip().lower() if 'ĐVT' in ton_kho_row.iloc[0] else ''
 
             # ⭐ KIEM TRA DVT de xac dinh don vi ton kho
             # Neu DVT trong file = dvt_lon → Ton kho luu theo don vi LON
