@@ -1,0 +1,25 @@
+{
+  "agents": [
+    {
+      "id": "BO_KHO_MUA_HANG_THEO_TARGET",
+      "name": "Hệ Thống Tự Động Mua Hàng - Phòng Xét Nghiệm",
+      "description": "Hệ thống tự động tính toán nhu cầu mua hàng (VTTH và Hóa Chất) cho phòng xét nghiệm y tế, tích hợp với Google Sheets.",
+      "path": "BO_KHO_MUA_HANG_THEO_TARGET",
+      "full_path": "D:\\Compass_Coding\\COMPASS_AGENTS\\BO_KHO_MUA_HANG_THEO_TARGET"
+    },
+    {
+      "id": "claude-code-meta-builder",
+      "name": "Claude Code Meta-Builder",
+      "description": "A comprehensive system for creating and optimizing Claude Code AI agent projects with proper structure, documentation, and functionality.",
+      "path": "claude-code-meta-builder",
+      "full_path": "D:\\Compass_Coding\\COMPASS_AGENTS\\claude-code-meta-builder"
+    },
+    {
+      "id": "tech-learning-assistant",
+      "name": "Tech Learning Assistant",
+      "description": "> Your AI-powered system for mastering new technologies efficiently through intelligent research, content extraction, and personalized study guides.",
+      "path": "tech-learning-assistant",
+      "full_path": "D:\\Compass_Coding\\COMPASS_AGENTS\\tech-learning-assistant"
+    }
+  ]
+}

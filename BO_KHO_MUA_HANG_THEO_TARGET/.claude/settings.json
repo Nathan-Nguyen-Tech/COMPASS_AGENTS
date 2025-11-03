@@ -1,0 +1,97 @@
+{
+  "projectName": "BO_KHO_MUA_HANG_THEO_TARGET",
+  "description": "Hệ thống tự động tính toán và mua hàng cho phòng xét nghiệm",
+  "version": "1.0.0",
+
+  "security": {
+    "allowedPaths": [
+      "workspace/",
+      "context/",
+      "tools/scripts/",
+      "config/"
+    ],
+    "deniedPaths": [
+      "config/service-account-key.json"
+    ],
+    "protectedFiles": [
+      "*.json",
+      "*.key",
+      "*credentials*"
+    ]
+  },
+
+  "googleSheets": {
+    "spreadsheetId": "1y18Hm-QYHzt5PrdiisPKxmWQidVNEBaG2NthP5Fc800",
+    "credentialsPath": "config/service-account-key.json",
+    "sheets": {
+      "vtth": "VTTH",
+      "hoaChatChiTiet": "Hoa Chat Chi Tiet",
+      "hoaChat": "Hoa Chat",
+      "phieuMuaHang": "Phiếu Mua Hàng",
+      "chiTietPhieu": "Chi Tiết Phiếu Mua Hàng",
+      "template": "Phiếu mua hàng mẫu version 1"
+    }
+  },
+
+  "defaults": {
+    "goiDichVu": "B2B-Gói đồng",
+    "donViNho": "lọ",
+    "donViLon": "Hộp",
+    "tyLeQuyDoi": 100
+  },
+
+  "qcCalib": {
+    "boSung": {
+      "enabled": true,
+      "items": [
+        {
+          "ten": "ERBA PATH",
+          "soLuong": 2,
+          "loai": "QC"
+        },
+        {
+          "ten": "ERBA NORM (Level-2)",
+          "soLuong": 2,
+          "loai": "QC"
+        },
+        {
+          "ten": "XL MULTICAL 4*3ml",
+          "soLuong": 2,
+          "loai": "CALIB"
+        }
+      ]
+    }
+  },
+
+  "validation": {
+    "minCustomers": 1,
+    "maxCustomers": 10000,
+    "validPackages": [
+      "B2B-Gói đồng",
+      "B2B-Gói cơ bản",
+      "B2B-Gói bạc"
+    ]
+  },
+
+  "fileFormats": {
+    "tonKho": [".xlsx", ".csv"],
+    "calculations": ".json"
+  },
+
+  "features": {
+    "autoBackup": false,
+    "emailNotifications": false,
+    "dashboard": false,
+    "lowStockAlerts": false
+  },
+
+  "paths": {
+    "workspace": "workspace/",
+    "calculations": "workspace/calculations/",
+    "inventoryFiles": "workspace/inventory-files/",
+    "purchaseOrders": "workspace/purchase-orders/",
+    "context": "context/",
+    "tools": "tools/",
+    "config": "config/"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "allowedCommands": [
+      "git *",
+      "npm *",
+      "node *",
+      "python *",
+      "pip *"
+    ],
+    "blockedPaths": [
+      "**/.env",
+      "**/.env.*",
+      "**/credentials.json",
+      "**/config/secrets.*",
+      "**/*secret*",
+      "**/*password*",
+      "**/*token*"
+    ]
+  },
+  "project": {
+    "name": "Tech Learning Assistant",
+    "description": "AI-powered system for mastering new technologies through intelligent research and content extraction",
+    "version": "1.0.0"
+  }
+}

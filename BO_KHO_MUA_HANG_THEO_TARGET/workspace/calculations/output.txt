@@ -1,0 +1,21 @@
+
+[CALCULATOR] Tinh VTTH cho 100 khach - B2B-Goi dong
+[INFO] Doc du lieu tu sheet 'VTTH'...
+[INFO] Loc theo cot 9 (goi: B2B-Goi dong)...
+[SUCCESS] Tim thay 30 loai VTTH cho goi nay
+[INFO] Dang tinh toan...
+
+==========================================================================================
+[SUCCESS] Da tinh VTTH cho 100 khach - B2B-Goi dong
+==========================================================================================
+STT   Ten San Pham                        Dinh muc     Nhu cau (don vi nho) So luong     DVT       
+------------------------------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Compass_Coding\COMPASS_AGENTS\BO_KHO_MUA_HANG_THEO_TARGET\tools\scripts\calculator.py", line 236, in <module>
+    display_vtth_results(results, so_khach, goi_dv)
+  File "D:\Compass_Coding\COMPASS_AGENTS\BO_KHO_MUA_HANG_THEO_TARGET\tools\scripts\calculator.py", line 190, in display_vtth_results
+    print(row_str)
+  File "C:\Users\nguye\AppData\Local\Programs\Python\Python312\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u1ecd' in position 7: character maps to <undefined>
