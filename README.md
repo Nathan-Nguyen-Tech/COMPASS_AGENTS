@@ -2,6 +2,58 @@
 
 Hệ thống CLI siêu đơn giản để quản lý và sử dụng các Claude Code AI Agents. **Chỉ cần gõ `compass` và chọn số!**
 
+## 📦 Cài Đặt Từ GitHub
+
+### Bước 1: Clone Repository
+
+```bash
+# Clone project về máy
+git clone https://github.com/Nathan-Nguyen-Tech/COMPASS_AGENTS.git
+
+# Di chuyển vào thư mục
+cd COMPASS_AGENTS
+```
+
+### Bước 2: Cài Đặt Dependencies (Tùy chọn)
+
+Một số agents có thể cần thư viện Python bổ sung. Kiểm tra file `requirements.txt` trong thư mục agent cụ thể:
+
+```bash
+# Ví dụ: Agent BO_KHO_MUA_HANG_THEO_TARGET
+cd BO_KHO_MUA_HANG_THEO_TARGET/tools
+pip install -r requirements.txt
+cd ../..
+```
+
+### Bước 3: Chạy Thử
+
+```bash
+# Quét và cập nhật danh sách agents
+python compass.py scan
+
+# Xem danh sách agents
+python compass.py list
+
+# Chọn số để chạy agent
+```
+
+### Bước 4: Setup PATH (Tùy chọn - Khuyến nghị)
+
+Để gõ `compass` thay vì `python compass.py`:
+
+**Windows:**
+```cmd
+# Thêm thư mục vào PATH (thay đổi đường dẫn cho phù hợp)
+setx PATH "%PATH%;C:\path\to\COMPASS_AGENTS"
+```
+
+**Linux/Mac:**
+```bash
+# Thêm alias vào ~/.bashrc hoặc ~/.zshrc
+echo "alias compass='python3 $(pwd)/compass.py'" >> ~/.bashrc
+source ~/.bashrc
+```
+
 ## 📋 Tổng Quan
 
 COMPASS AGENTS cho phép bạn:
@@ -11,13 +63,18 @@ COMPASS AGENTS cho phép bạn:
 - ✅ **Quản lý nhiều agents** từ một nơi
 - ✅ **Tự động phát hiện agents mới**
 
-## 🚀 Quickstart (2 Bước)
+## 🚀 Quickstart (Sau Khi Clone)
 
 ```bash
-# Bước 1: Chạy compass
+# Bước 1: Quét agents
+python compass.py scan
+
+# Bước 2: Chạy compass
+python compass.py
+# hoặc nếu đã setup PATH:
 compass
 
-# Bước 2: Chọn số agent (VD: 1)
+# Bước 3: Chọn số agent (VD: 1)
 1
 
 # ✅ XONG! Agent sẵn sàng làm việc!
@@ -310,13 +367,78 @@ Hệ thống tạo và tối ưu hóa các dự án Claude Code AI agents.
 - [ ] Agent health check
 - [ ] Cập nhật tự động
 
+## 🔄 Cập Nhật Code Mới Từ GitHub
+
+### Cách 1: Pull code mới nhất (Khuyến nghị)
+
+```bash
+# Di chuyển vào thư mục COMPASS_AGENTS
+cd COMPASS_AGENTS
+
+# Pull code mới nhất từ GitHub
+git pull origin main
+
+# Quét lại agents (nếu có agent mới)
+python compass.py scan
+```
+
+### Cách 2: Xem thay đổi trước khi pull
+
+```bash
+# Kiểm tra xem có cập nhật mới không
+git fetch origin
+git status
+
+# Xem chi tiết những gì sẽ được cập nhật
+git log HEAD..origin/main --oneline
+
+# Pull về
+git pull origin main
+```
+
+### Cách 3: Reset về phiên bản GitHub (Nếu có conflict)
+
+**⚠️ CẢNH BÁO: Lệnh này sẽ XÓA tất cả thay đổi local của bạn!**
+
+```bash
+# Backup thay đổi của bạn trước (nếu cần)
+git stash
+
+# Reset về phiên bản GitHub
+git fetch origin
+git reset --hard origin/main
+
+# Lấy lại thay đổi đã backup (nếu cần)
+git stash pop
+```
+
+### Kiểm Tra Phiên Bản
+
+```bash
+# Xem commit hiện tại
+git log -1 --oneline
+
+# Xem lịch sử cập nhật
+git log --oneline -10
+```
+
 ## 📝 Đóng Góp
 
 Nếu bạn muốn thêm tính năng hoặc sửa lỗi:
-1. Fork repository
-2. Tạo branch mới
-3. Commit changes
-4. Tạo Pull Request
+
+### Cho người dùng:
+1. Fork repository trên GitHub
+2. Clone fork của bạn về máy
+3. Tạo branch mới: `git checkout -b feature/ten-tinh-nang`
+4. Thực hiện thay đổi và commit: `git commit -m "Thêm tính năng X"`
+5. Push lên fork: `git push origin feature/ten-tinh-nang`
+6. Tạo Pull Request trên GitHub
+
+### Cho maintainers:
+1. Thực hiện thay đổi local
+2. Commit: `git add . && git commit -m "Mô tả thay đổi"`
+3. Push lên GitHub: `git push origin main`
+4. Người dùng sẽ pull về bằng `git pull`
 
 ## 📄 License
 
