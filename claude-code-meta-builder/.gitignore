@@ -3,7 +3,8 @@
 !/workspace/README.md
 
 /context/*
-!/worcontext/README.md
+!/context/README.md
+!/context/mcp-knowledge/
 
 /tools/scripts/*
 
