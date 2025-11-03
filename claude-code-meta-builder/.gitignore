@@ -1,0 +1,24 @@
+# Workspace (user can customize)
+/workspace/*
+!/workspace/README.md
+
+/context/*
+!/worcontext/README.md
+
+/tools/scripts/*
+
+# Sensitive
+.env*
+*.local.json
+/secrets/
+
+# Temporary
+*.tmp
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Research & experimental (Meta Builder specific)
+/research/
