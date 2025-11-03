@@ -26,14 +26,20 @@ Trong VS Code:
 
 ### Bước 4: Sử dụng Slash Commands
 
-Trong Claude Code, gõ `/` để xem danh sách agents:
+Trong Claude Code, gõ `/` để xem danh sách agents. Agents được tổ chức theo bộ phận:
 
 ```
-/agents   - Xem tất cả agents có sẵn
-/kho      - Hệ thống mua hàng tự động
-/learn    - Trợ lý học công nghệ
-/meta     - Claude Code project builder
+/agents          - Xem tất cả agents (tổ chức theo bộ phận)
+
+Back-Office (BO):
+/bo-kho          - Hệ thống mua hàng tự động
+
+Compass (Dùng chung):
+/compass-learn   - Trợ lý học công nghệ
+/compass-meta    - Claude Code project builder
 ```
+
+**Mẹo:** Gõ tiền tố bộ phận để filter (ví dụ: `/bo-` cho Back-Office, `/compass-` cho agents dùng chung)
 
 ## 📋 Tổng Quan
 
@@ -56,7 +62,7 @@ COMPASS AGENTS cho phép bạn:
 
 **Ví dụ:**
 ```
-You: /kho
+You: /bo-kho
 Claude: [Chuyển sang BO_KHO_MUA_HANG_THEO_TARGET agent]
         Bạn muốn làm gì hôm nay?
 
@@ -77,9 +83,9 @@ Claude: [Thực hiện tính toán...]
 **Ví dụ workflow:**
 ```
 You: /agents
-Claude: [Hiển thị danh sách 3 agents]
+Claude: [Hiển thị danh sách agents theo bộ phận]
 
-You: /kho
+You: /bo-kho
 Claude: [Chuyển sang agent mua hàng]
         Bạn muốn làm gì hôm nay?
 
@@ -132,13 +138,13 @@ COMPASS_AGENTS/
 
 ## 🎨 Ví Dụ Sử Dụng
 
-### Workflow 1: Làm việc với agent Mua Hàng
+### Workflow 1: Làm việc với agent Mua Hàng (Back-Office)
 
 ```
 You: /agents
-Claude: [Hiển thị danh sách tất cả agents]
+Claude: [Hiển thị danh sách tất cả agents theo bộ phận]
 
-You: /kho
+You: /bo-kho
 Claude: Bạn muốn làm gì hôm nay?
 
 You: Tính VTTH cho 150 khách hàng, gọi đông
@@ -150,10 +156,10 @@ You: Tạo phiếu mua hàng
 Claude: [Tạo phiếu mua hàng trong Google Sheets]
 ```
 
-### Workflow 2: Học công nghệ mới
+### Workflow 2: Học công nghệ mới (Compass - Dùng chung)
 
 ```
-You: /learn
+You: /compass-learn
 Claude: Bạn muốn học công nghệ gì hôm nay?
 
 You: Tôi muốn học React Hooks
@@ -167,10 +173,10 @@ Claude: [Trích xuất transcript từ video]
         [Lưu vào context/research/]
 ```
 
-### Workflow 3: Tạo Claude Code project mới
+### Workflow 3: Tạo Claude Code project mới (Compass - Dùng chung)
 
 ```
-You: /meta
+You: /compass-meta
 Claude: Bạn muốn tạo project mới hay làm việc với project hiện có?
 
 You: Tạo project mới tên "inventory-tracker"
@@ -209,15 +215,14 @@ Không cần cài thêm thư viện Python nào, chỉ dùng standard library.
 
 ## 📊 Agents Hiện Có
 
-### 1. 🏥 `/kho` - Hệ Thống Mua Hàng Tự Động
+Agents được tổ chức theo 4 bộ phận: **Back-Office (BO)**, **Business Development (BD)**, **Clinic**, và **Compass (Dùng chung)**.
+
+### 🏥 Back-Office (BO)
+
+#### `/bo-kho` - Hệ Thống Mua Hàng Tự Động
 **Project:** `BO_KHO_MUA_HANG_THEO_TARGET`
 
 Hệ thống tự động mua hàng cho phòng xét nghiệm y tế, tích hợp với Google Sheets.
-
-**Cách sử dụng:**
-```
-/kho
-```
 
 **Chức năng:**
 - Tính toán nhu cầu VTTH và Hóa Chất
@@ -232,15 +237,30 @@ Hệ thống tự động mua hàng cho phòng xét nghiệm y tế, tích hợp
 
 ---
 
-### 2. 📚 `/learn` - Tech Learning Assistant
+### 💼 Business Development (BD)
+
+*Chưa có agents. Sẽ được thêm vào sau.*
+
+**Quy tắc đặt tên:** `/bd-{tên-agent}`
+
+---
+
+### 🏥 Clinic
+
+*Chưa có agents. Sẽ được thêm vào sau.*
+
+**Quy tắc đặt tên:** `/clinic-{tên-agent}`
+
+---
+
+### 🧭 Compass (Dùng Chung)
+
+Các agents này có sẵn cho tất cả bộ phận.
+
+#### `/compass-learn` - Tech Learning Assistant
 **Project:** `tech-learning-assistant`
 
 Trợ lý học công nghệ mới, thu thập và tổ chức tài liệu học tập.
-
-**Cách sử dụng:**
-```
-/learn
-```
 
 **Chức năng:**
 - Tìm kiếm tài liệu học tập chất lượng cao
@@ -253,23 +273,35 @@ Trợ lý học công nghệ mới, thu thập và tổ chức tài liệu học
 - `/youtube <url>` - Trích xuất video
 - `/summarize` - Tóm tắt tài liệu
 
----
-
-### 3. 🏗️ `/meta` - Claude Code Meta-Builder
+#### `/compass-meta` - Claude Code Meta-Builder
 **Project:** `claude-code-meta-builder`
 
 Hệ thống tạo và tối ưu hóa các dự án Claude Code AI agents.
-
-**Cách sử dụng:**
-```
-/meta
-```
 
 **Chức năng:**
 - Tạo cấu trúc dự án Claude Code chuẩn
 - Setup agents, commands, và workspace
 - Nghiên cứu patterns và best practices
 - Tối ưu hóa existing projects
+
+---
+
+## 📝 Quy Tắc Đặt Tên Agents
+
+Khi tạo agent mới, tuân theo quy tắc:
+
+| Bộ Phận | Prefix | Ví Dụ |
+|---------|--------|-------|
+| Back-Office | `bo-` | `/bo-kho`, `/bo-inventory`, `/bo-accounting` |
+| Business Development | `bd-` | `/bd-sales`, `/bd-leads`, `/bd-pipeline` |
+| Clinic | `clinic-` | `/clinic-patients`, `/clinic-schedule` |
+| Compass (Dùng chung) | `compass-` | `/compass-learn`, `/compass-meta` |
+
+**Lợi ích:**
+- ✅ Dễ phân biệt agents theo bộ phận
+- ✅ Autocomplete thông minh (gõ `/bo-` để thấy tất cả Back-Office agents)
+- ✅ Tránh trùng tên giữa các bộ phận
+- ✅ Dễ quản lý khi có nhiều agents
 
 ## 🔐 Bảo Mật
 
