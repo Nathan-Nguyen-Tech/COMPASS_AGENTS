@@ -4,20 +4,53 @@ Tập hợp các Claude Code AI Agents chuyên biệt. **Chỉ cần mở Claude
 
 ## 📦 Cài Đặt
 
-### Bước 1: Clone Repository
+**Có 2 cách sử dụng COMPASS_AGENTS:**
+
+### Cách 1: Sử Dụng Claude Code CLI (Terminal) - Khuyến Nghị
+
+Sử dụng trực tiếp trong terminal mà không cần mở VS Code.
+
+**👉 [Xem Hướng Dẫn Cài Đặt Chi Tiết](./INSTALL_GUIDE.md)**
+
+**Tóm tắt:**
+```bash
+# 1. Cài Node.js (nếu chưa có)
+# Download từ: https://nodejs.org/
+
+# 2. Cài Claude Code CLI
+npm install -g @anthropic-ai/claude-code
+
+# 3. Cấu hình API Key
+claude config
+
+# 4. Clone COMPASS_AGENTS
+git clone https://github.com/Nathan-Nguyen-Tech/COMPASS_AGENTS.git
+cd COMPASS_AGENTS
+
+# 5. Khởi động Claude
+claude
+
+# 6. Sử dụng slash commands
+> /agents
+> /bo-kho
+```
+
+### Cách 2: Sử Dụng Trong VS Code
+
+#### Bước 1: Clone Repository
 
 ```bash
 git clone https://github.com/Nathan-Nguyen-Tech/COMPASS_AGENTS.git
 cd COMPASS_AGENTS
 ```
 
-### Bước 2: Mở trong VS Code
+#### Bước 2: Mở trong VS Code
 
 ```bash
 code .
 ```
 
-### Bước 3: Mở Claude Code
+#### Bước 3: Mở Claude Code
 
 Trong VS Code:
 - Nhấn `Ctrl+Shift+P` (hoặc `Cmd+Shift+P` trên Mac)
