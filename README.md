@@ -1,222 +1,108 @@
 # COMPASS AGENTS - Hệ Thống Quản Lý AI Agents
 
-Hệ thống CLI siêu đơn giản để quản lý và sử dụng các Claude Code AI Agents. **Chỉ cần gõ `compass` và chọn số!**
+Tập hợp các Claude Code AI Agents chuyên biệt. **Chỉ cần mở Claude Code và gõ `/` để chọn agent!**
 
-## 📦 Cài Đặt Từ GitHub
+## 📦 Cài Đặt
 
 ### Bước 1: Clone Repository
 
 ```bash
-# Clone project về máy
 git clone https://github.com/Nathan-Nguyen-Tech/COMPASS_AGENTS.git
-
-# Di chuyển vào thư mục
 cd COMPASS_AGENTS
 ```
 
-### Bước 2: Cài Đặt Dependencies (Tùy chọn)
-
-Một số agents có thể cần thư viện Python bổ sung. Kiểm tra file `requirements.txt` trong thư mục agent cụ thể:
+### Bước 2: Mở trong VS Code
 
 ```bash
-# Ví dụ: Agent BO_KHO_MUA_HANG_THEO_TARGET
-cd BO_KHO_MUA_HANG_THEO_TARGET/tools
-pip install -r requirements.txt
-cd ../..
+code .
 ```
 
-### Bước 3: Chạy Thử
+### Bước 3: Mở Claude Code
 
-```bash
-# Quét và cập nhật danh sách agents
-python compass.py scan
+Trong VS Code:
+- Nhấn `Ctrl+Shift+P` (hoặc `Cmd+Shift+P` trên Mac)
+- Gõ "Claude Code: Open"
+- Hoặc click vào icon Claude Code ở sidebar
 
-# Xem danh sách agents
-python compass.py list
+### Bước 4: Sử dụng Slash Commands
 
-# Chọn số để chạy agent
+Trong Claude Code, gõ `/` để xem danh sách agents:
+
 ```
-
-### Bước 4: Setup PATH (Tùy chọn - Khuyến nghị)
-
-Để gõ `compass` thay vì `python compass.py`:
-
-**Windows:**
-```cmd
-# Thêm thư mục vào PATH (thay đổi đường dẫn cho phù hợp)
-setx PATH "%PATH%;C:\path\to\COMPASS_AGENTS"
-```
-
-**Linux/Mac:**
-```bash
-# Thêm alias vào ~/.bashrc hoặc ~/.zshrc
-echo "alias compass='python3 $(pwd)/compass.py'" >> ~/.bashrc
-source ~/.bashrc
+/agents   - Xem tất cả agents có sẵn
+/kho      - Hệ thống mua hàng tự động
+/learn    - Trợ lý học công nghệ
+/meta     - Claude Code project builder
 ```
 
 ## 📋 Tổng Quan
 
 COMPASS AGENTS cho phép bạn:
-- ✅ **Chọn agent chỉ với 2 bước** - Gõ `compass` → Chọn số
-- ✅ **Làm việc ngay trong session hiện tại** - Không cần mở terminal mới
+- ✅ **Chọn agent bằng slash commands** - Gõ `/` → Chọn agent
+- ✅ **Làm việc trong Claude Code** - Chat tự nhiên với AI
 - ✅ **Auto-load context** - Tự động đọc CLAUDE.md của agent
-- ✅ **Quản lý nhiều agents** từ một nơi
-- ✅ **Tự động phát hiện agents mới**
+- ✅ **Quản lý nhiều agents** từ một workspace
+- ✅ **Chuyển đổi nhanh** giữa các agents
 
-## 🚀 Quickstart (Sau Khi Clone)
+## 🚀 Quickstart
+
+**Cách sử dụng đơn giản nhất:**
+
+1. Mở VS Code tại thư mục COMPASS_AGENTS
+2. Mở Claude Code (Ctrl+Shift+P → "Claude Code: Open")
+3. Gõ `/agents` để xem danh sách
+4. Chọn agent bạn muốn dùng (vd: `/kho`)
+5. Bắt đầu chat!
+
+**Ví dụ:**
+```
+You: /kho
+Claude: [Chuyển sang BO_KHO_MUA_HANG_THEO_TARGET agent]
+        Bạn muốn làm gì hôm nay?
+
+You: Tính VTTH cho 100 khách hàng
+Claude: [Thực hiện tính toán...]
+```
+
+## 💡 Cách Sử Dụng
+
+### Sử dụng Slash Commands (Khuyến nghị)
+
+**Đây là cách đơn giản và hiệu quả nhất:**
+
+1. Mở VS Code tại thư mục COMPASS_AGENTS
+2. Mở Claude Code
+3. Gõ `/` và chọn agent
+
+**Ví dụ workflow:**
+```
+You: /agents
+Claude: [Hiển thị danh sách 3 agents]
+
+You: /kho
+Claude: [Chuyển sang agent mua hàng]
+        Bạn muốn làm gì hôm nay?
+
+You: Tính VTTH cho 100 khách hàng
+Claude: [Thực hiện...]
+```
+
+### Sử dụng CLI (Tùy chọn)
+
+Nếu bạn muốn dùng terminal, vẫn có sẵn CLI tool:
 
 ```bash
-# Bước 1: Quét agents
-python compass.py scan
+# Xem danh sách agents
+python compass.py list
 
-# Bước 2: Chạy compass
-python compass.py
-# hoặc nếu đã setup PATH:
-compass
+# Xem thông tin agent
+python compass.py info <agent-id>
 
-# Bước 3: Chọn số agent (VD: 1)
-1
-
-# ✅ XONG! Agent sẵn sàng làm việc!
+# Mở VS Code tại thư mục agent
+python compass.py open <agent-id>
 ```
 
-## 🚀 Cài Đặt & Sử Dụng
-
-### Cách 1: Sử Dụng Trực Tiếp (Không cần cài đặt)
-
-```bash
-# Chạy ngay
-python compass.py
-
-# Chọn số agent
-1
-```
-
-### Cách 2: Setup PATH (Khuyến Nghị - Chỉ làm 1 lần)
-
-**Windows:**
-```cmd
-setx PATH "%PATH%;D:\Compass_Coding\COMPASS_AGENTS"
-```
-
-**Linux/Mac:**
-```bash
-# Thêm vào ~/.bashrc hoặc ~/.zshrc
-alias compass='python3 /path/to/COMPASS_AGENTS/compass.py'
-source ~/.bashrc
-```
-
-**Sau khi setup, chỉ cần:**
-```bash
-compass
-```
-
-## 🎯 Các Lệnh Chính
-
-### 1. Quét và cập nhật danh sách agents
-
-```bash
-compass scan
-```
-
-Lệnh này sẽ:
-- Tự động tìm tất cả các thư mục con có file `CLAUDE.md`
-- Đọc thông tin từ `CLAUDE.md` và `README.md`
-- Lưu vào file `agents.json`
-
-### 2. Xem danh sách agents (Interactive)
-
-```bash
-compass list
-# hoặc
-compass ls
-```
-
-**Tính năng mới: Interactive Mode!**
-
-Sau khi hiển thị danh sách, bạn có thể:
-- Nhập số (1, 2, 3...) để chọn và chạy agent ngay lập tức
-- Nhấn Enter để thoát
-
-Ví dụ:
-```
-[*] Danh sach Agents:
-
-1. Hệ Thống Tự Động Mua Hàng - Phòng Xét Nghiệm
-   ID: BO_KHO_MUA_HANG_THEO_TARGET
-   ...
-
-2. Tech Learning Assistant
-   ID: tech-learning-assistant
-   ...
-
-============================================================
-Chon agent de chay (nhap so 1-2, hoac Enter de thoat): 1
-
-[+] Chay Agent: Hệ Thống Tự Động Mua Hàng...
-```
-
-### 2b. Chạy agent trực tiếp
-
-```bash
-compass run <agent-id>
-```
-
-Ví dụ:
-```bash
-compass run tech-learning-assistant
-```
-
-Lệnh này sẽ:
-- Hiển thị thông tin agent
-- Hỏi có muốn mở terminal mới không
-- Mở terminal tại thư mục agent (nếu chọn yes)
-- Hoặc hiển thị lệnh cd (nếu chọn no)
-
-### 3. Xem thông tin chi tiết
-
-```bash
-compass info <agent-id>
-```
-
-Ví dụ:
-```bash
-compass info BO_KHO_MUA_HANG_THEO_TARGET
-compass info tech-learning-assistant
-compass info claude-code-meta-builder
-```
-
-Hiển thị:
-- Thông tin đầy đủ về agent
-- Cấu trúc thư mục
-- Các file quan trọng có sẵn
-
-### 4. Mở terminal tại thư mục agent (Nhanh)
-
-```bash
-compass open <agent-id>
-```
-
-Ví dụ:
-```bash
-compass open tech-learning-assistant
-```
-
-Lệnh này sẽ mở một terminal/cmd mới tại thư mục của agent ngay lập tức (không hỏi).
-
-### 5. Lấy lệnh cd để chuyển thư mục
-
-```bash
-compass cd <agent-id>
-```
-
-Hiển thị lệnh cd để bạn có thể copy và chạy trong terminal hiện tại.
-
-### 6. Xem hướng dẫn
-
-```bash
-compass help
-```
+**Lưu ý:** CLI chỉ dùng để quản lý files, không thể chat với AI. Để chat với agent, bạn cần dùng Claude Code.
 
 ## 📁 Cấu Trúc Thư Mục
 
@@ -246,57 +132,72 @@ COMPASS_AGENTS/
 
 ## 🎨 Ví Dụ Sử Dụng
 
-### Workflow 1: Khám phá agents có sẵn
+### Workflow 1: Làm việc với agent Mua Hàng
 
-```bash
-# Bước 1: Quét agents
-compass scan
+```
+You: /agents
+Claude: [Hiển thị danh sách tất cả agents]
 
-# Bước 2: Xem danh sách
-compass list
+You: /kho
+Claude: Bạn muốn làm gì hôm nay?
 
-# Bước 3: Xem chi tiết
-compass info tech-learning-assistant
+You: Tính VTTH cho 150 khách hàng, gọi đông
+Claude: [cd BO_KHO_MUA_HANG_THEO_TARGET]
+        [Thực hiện tính toán VTTH...]
+        [Hiển thị kết quả]
+
+You: Tạo phiếu mua hàng
+Claude: [Tạo phiếu mua hàng trong Google Sheets]
 ```
 
-### Workflow 2: Chạy agent nhanh nhất (KHUYẾN NGHỊ)
+### Workflow 2: Học công nghệ mới
 
-```bash
-# Cách 1: Interactive - Chọn từ danh sách
-compass list
-# Nhập số agent (VD: 1) để chạy ngay
+```
+You: /learn
+Claude: Bạn muốn học công nghệ gì hôm nay?
 
-# Cách 2: Chạy trực tiếp
-compass run tech-learning-assistant
-# Chọn y để mở terminal mới
+You: Tôi muốn học React Hooks
+Claude: [cd tech-learning-assistant]
+        [Research Agent tìm tài liệu...]
+        [Tạo study guide 8 tuần]
+        [Tổ chức tài liệu vào workspace/]
+
+You: /youtube https://youtube.com/watch?v=...
+Claude: [Trích xuất transcript từ video]
+        [Lưu vào context/research/]
 ```
 
-### Workflow 3: Làm việc với một agent (Các cách khác)
+### Workflow 3: Tạo Claude Code project mới
 
-```bash
-# Cách 1: Mở terminal mới nhanh (không hỏi)
-compass open BO_KHO_MUA_HANG_THEO_TARGET
+```
+You: /meta
+Claude: Bạn muốn tạo project mới hay làm việc với project hiện có?
 
-# Cách 2: Lấy lệnh cd
-compass cd BO_KHO_MUA_HANG_THEO_TARGET
-# Sau đó copy lệnh cd và chạy
+You: Tạo project mới tên "inventory-tracker"
+Claude: [cd claude-code-meta-builder]
+        [Tạo cấu trúc project chuẩn]
+        [Setup agents, commands, workspace]
+        [Generate documentation templates]
 ```
 
-### Workflow 3: Thêm agent mới
+### Workflow 4: Thêm agent mới vào COMPASS_AGENTS
 
 ```bash
-# Bước 1: Tạo thư mục mới với cấu trúc agent
-mkdir new-agent
-cd new-agent
-# Tạo các file cần thiết (CLAUDE.md, README.md, etc.)
+# Bước 1: Tạo thư mục agent mới
+mkdir my-new-agent
+cd my-new-agent
 
-# Bước 2: Quay lại thư mục gốc và quét lại
+# Bước 2: Tạo cấu trúc chuẩn (dùng /meta)
+# Trong Claude Code:
+/meta
+"Tạo structure cho agent my-new-agent"
+
+# Bước 3: Quay về COMPASS_AGENTS và tạo slash command
 cd ..
-compass scan
+# Tạo file .claude/commands/my-agent.md
 
-# Bước 3: Kiểm tra agent mới
-compass list
-compass info new-agent
+# Bước 4: Reload Claude Code và test
+/my-agent
 ```
 
 ## 🔧 Yêu Cầu Hệ Thống
@@ -308,31 +209,67 @@ Không cần cài thêm thư viện Python nào, chỉ dùng standard library.
 
 ## 📊 Agents Hiện Có
 
-### 1. BO_KHO_MUA_HANG_THEO_TARGET
+### 1. 🏥 `/kho` - Hệ Thống Mua Hàng Tự Động
+**Project:** `BO_KHO_MUA_HANG_THEO_TARGET`
+
 Hệ thống tự động mua hàng cho phòng xét nghiệm y tế, tích hợp với Google Sheets.
+
+**Cách sử dụng:**
+```
+/kho
+```
 
 **Chức năng:**
 - Tính toán nhu cầu VTTH và Hóa Chất
 - So sánh với tồn kho
 - Tạo phiếu mua hàng tự động
 
-### 2. tech-learning-assistant
+**Slash commands bên trong:**
+- `/tinh-vtth` - Tính VTTH
+- `/tinh-hoa-chat` - Tính hóa chất
+- `/so-sanh-kho` - So sánh kho
+- `/tao-phieu` - Tạo phiếu
+
+---
+
+### 2. 📚 `/learn` - Tech Learning Assistant
+**Project:** `tech-learning-assistant`
+
 Trợ lý học công nghệ mới, thu thập và tổ chức tài liệu học tập.
 
-**Chức năng:**
-- Tìm kiếm tài liệu học tập
-- Trích xuất nội dung từ video
-- Tạo study guides
-- Tổ chức kiến thức
+**Cách sử dụng:**
+```
+/learn
+```
 
-### 3. claude-code-meta-builder
+**Chức năng:**
+- Tìm kiếm tài liệu học tập chất lượng cao
+- Trích xuất nội dung từ video tutorials
+- Tạo study guides và learning paths
+- Xây dựng lộ trình học tập cá nhân
+
+**Slash commands bên trong:**
+- `/learn <topic>` - Bắt đầu học
+- `/youtube <url>` - Trích xuất video
+- `/summarize` - Tóm tắt tài liệu
+
+---
+
+### 3. 🏗️ `/meta` - Claude Code Meta-Builder
+**Project:** `claude-code-meta-builder`
+
 Hệ thống tạo và tối ưu hóa các dự án Claude Code AI agents.
 
+**Cách sử dụng:**
+```
+/meta
+```
+
 **Chức năng:**
-- Tạo cấu trúc dự án Claude Code
-- Phân tích và tối ưu hóa agents
-- Nghiên cứu và phát triển patterns
-- Tạo documentation
+- Tạo cấu trúc dự án Claude Code chuẩn
+- Setup agents, commands, và workspace
+- Nghiên cứu patterns và best practices
+- Tối ưu hóa existing projects
 
 ## 🔐 Bảo Mật
 
