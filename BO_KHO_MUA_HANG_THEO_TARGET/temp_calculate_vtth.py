@@ -15,7 +15,7 @@ SHEET_NAME = 'VTTH'
 CREDENTIALS_PATH = r'D:\Compass_Coding\COMPASS_AGENTS\BO_KHO_MUA_HANG_THEO_TARGET\config\service-account-key.json'
 
 # Input
-so_khach = 100
+so_khach = 101
 goi_dv = 'B2B-Gói đồng'
 
 # Mapping cột theo gói
