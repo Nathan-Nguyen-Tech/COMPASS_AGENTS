@@ -34,6 +34,137 @@ The Meta-Builder is your development environment for creating well-structured Cl
    - Create custom commands
    - Organize context materials
 
+## 🆕 MCP-First Project Creation (Experimental - Branch: dev_labs)
+
+### Two Approaches to Project Creation
+
+#### `/create-project` (Original)
+**Standard approach** - Creates projects with custom code for integrations
+
+**Best for:**
+- Proprietary/internal systems
+- Highly customized logic
+- Full control requirements
+
+#### `/create-project-mcp-support` (MCP-First) ⭐ NEW
+**Modern approach** - Prioritizes Model Context Protocol (MCP) servers over custom code
+
+**Best for:**
+- Standard services (Google Sheets, Slack, GitHub, etc.)
+- Faster development (minutes vs hours)
+- Lower maintenance (automatic updates)
+- Security best practices built-in
+
+### What is MCP?
+
+Model Context Protocol (MCP) provides standardized integrations for external services:
+- **Official servers** maintained by Anthropic
+- **Community servers** for popular services
+- **No custom code needed** for standard operations
+- **Automatic updates** via `npx`
+
+### Example: Google Sheets Integration
+
+**Original Approach (`/create-project`):**
+```
+Creates: tools/scripts/google_sheets_api.py (259 lines)
+- Manual authentication
+- Custom error handling
+- Ongoing maintenance required
+Development time: ~8 hours
+Maintenance: ~2 hours/month
+```
+
+**MCP-First Approach (`/create-project-mcp-support`):**
+```
+Creates: .claude/mcp-config.json (5 lines)
+- @modelcontextprotocol/server-gdrive
+- Automatic authentication
+- Best practice security
+- Community maintained
+Setup time: ~15 minutes
+Maintenance: Minimal (auto-updates)
+```
+
+**Time saved: ~8 hours development + ongoing maintenance!**
+
+### How It Works
+
+1. **Describe your project:**
+   ```bash
+   /create-project-mcp-support "Analyze sales data from Google Sheets and send daily reports via Slack"
+   ```
+
+2. **MCP Discovery runs automatically:**
+   ```
+   Searching for MCP servers...
+   ✅ Google Sheets → @modelcontextprotocol/server-gdrive
+   ✅ Slack → @modelcontextprotocol/server-slack
+
+   Proceed with MCP servers? [Y/n]
+   ```
+
+3. **Project generated with MCP integration:**
+   ```
+   Creates:
+   - .claude/mcp-config.json (server configuration)
+   - tools/mcp-documentation/ (usage guides)
+   - Agents configured for MCP tools
+   - Setup instructions
+   ```
+
+### MCP Knowledge Base
+
+The meta-builder includes comprehensive MCP documentation:
+- **MCP Server Catalog** - 20+ official & community servers
+- **Integration Patterns** - Best practices & security
+- **Decision Framework** - When to use MCP vs custom code
+
+Location: `context/mcp-knowledge/`
+
+### Supported Integrations
+
+**Data & Storage:**
+- Google Sheets/Drive, PostgreSQL, SQLite, Filesystem
+
+**Communication:**
+- Slack, Email (SMTP)
+
+**Development:**
+- GitHub, GitLab
+
+**Search & Research:**
+- Brave Search, YouTube Transcripts, Web Fetch
+
+**AI & Memory:**
+- Memory (persistent context), Embeddings
+
+[See full catalog →](context/mcp-knowledge/MCP_SERVER_CATALOG.md)
+
+### When to Use Which?
+
+| Use `/create-project-mcp-support` when: | Use `/create-project` when: |
+|----------------------------------------|----------------------------|
+| ✅ Standard services (Google, Slack, GitHub) | 🔧 Internal/proprietary systems |
+| ✅ Want fast development | 🔧 Highly customized logic |
+| ✅ Prefer low maintenance | 🔧 Need full control |
+| ✅ Security best practices important | 🔧 No suitable MCP exists |
+
+**Not sure?** Start with `/create-project-mcp-support` - it will recommend custom code when appropriate!
+
+### Try It Now
+
+```bash
+# From meta-builder directory
+cd claude-code-meta-builder
+claude
+
+# Create MCP-first project
+/create-project-mcp-support
+```
+
+**Note:** This feature is experimental and available on the `dev_labs` branch for testing and feedback.
+
 ## Standard Project Structure
 
 Every Claude Code project created includes:
