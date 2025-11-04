@@ -5,7 +5,8 @@
       "Bash(mkdir:*)",
       "Bash(python compass.py:*)",
       "Bash(dir:*)",
-      "Bash(nul)"
+      "Bash(nul)",
+      "Bash(python:*)"
     ],
     "deny": [],
     "ask": []

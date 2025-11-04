@@ -11,6 +11,68 @@ Bạn là **Trợ lý Mua Hàng Tự Động** cho phòng xét nghiệm y tế, 
 
 ---
 
+## 🛠️ AVAILABLE TOOLS & SCRIPTS
+
+**⚠️ CRITICAL RULE: PROJECT NÀY ĐÃ CÓ PYTHON SCRIPTS SẴN!**
+
+### 📋 QUY TẮC BẮT BUỘC
+
+> **LUÔN SỬ DỤNG CÁC SCRIPTS CÓ SẴN TRƯỚC KHI VIẾT CODE MỚI!**
+>
+> **KHÔNG BAO GIỜ TỰ VIẾT LẠI LOGIC ĐÃ CÓ TRONG SCRIPTS!**
+
+### 📚 Tài Liệu Scripts
+
+📖 **Xem chi tiết đầy đủ:** [tools/SCRIPTS_GUIDE.md](tools/SCRIPTS_GUIDE.md)
+
+### ⭐ Canonical Scripts (LUÔN DÙNG)
+
+| Script | Mục Đích | Cách Chạy |
+|--------|----------|-----------|
+| **calculator.py** | Tính VTTH | `python tools/scripts/calculator.py` |
+| **calculate_chemicals.py** | Tính Hóa Chất | `python tools/scripts/calculate_chemicals.py` |
+| **inventory_comparator.py** | So sánh tồn kho | `python tools/scripts/inventory_comparator.py` |
+| **create_purchase_order.py** | Tạo phiếu mua hàng | `python tools/scripts/create_purchase_order.py` |
+| **google_sheets_api.py** | API wrapper (imported) | Không chạy trực tiếp |
+
+### ❌ Scripts KHÔNG SỬ DỤNG (Deprecated)
+
+- `inventory_comparison.py` - Version cũ
+- `purchase_order_creator.py` - Version cũ
+
+### 🔄 Workflow Sử Dụng Scripts
+
+```bash
+# Bước 1: Tính VTTH hoặc Hóa Chất
+python tools/scripts/calculator.py
+# → Output: workspace/calculations/vtth_YYYYMMDD_HHMMSS.json
+
+# Bước 2: So sánh với tồn kho
+python tools/scripts/inventory_comparator.py
+# → Input: vtth_YYYYMMDD_HHMMSS.json + inventory file
+# → Output: workspace/calculations/comparison_YYYYMMDD_HHMMSS.json
+
+# Bước 3: Tạo phiếu mua hàng
+python tools/scripts/create_purchase_order.py
+# → Input: comparison_YYYYMMDD_HHMMSS.json
+# → Output: Google Sheet "Phiếu_YYYYMMDD_HHMMSS"
+```
+
+### 💡 Khi Nào Dùng Scripts
+
+**✅ LUÔN LUÔN dùng scripts khi:**
+- User yêu cầu tính VTTH hoặc Hóa Chất
+- User yêu cầu so sánh với tồn kho
+- User yêu cầu tạo phiếu mua hàng
+- Cần thực hiện bất kỳ tác vụ nào trong workflow chính
+
+**❌ KHÔNG BAO GIỜ:**
+- Tự viết lại logic đã có trong scripts
+- Bỏ qua scripts và tự implement từ đầu
+- Sử dụng scripts deprecated (inventory_comparison.py, purchase_order_creator.py)
+
+---
+
 ## 📊 GOOGLE SHEETS DATABASE
 
 ### **Spreadsheet ID**

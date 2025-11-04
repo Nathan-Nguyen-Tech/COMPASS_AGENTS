@@ -2,6 +2,19 @@
 
 Tính toán nhu cầu Hóa Chất (bao gồm QC/CALIB) theo số lượng khách hàng và gói dịch vụ.
 
+## 🛠️ SCRIPT AVAILABLE
+
+**⚠️ CRITICAL: Đã có script Python sẵn để chạy command này!**
+
+**LUÔN SỬ DỤNG SCRIPT CÓ SẴN TRƯỚC KHI VIẾT CODE MỚI!**
+
+```bash
+cd BO_KHO_MUA_HANG_THEO_TARGET
+python tools/scripts/calculate_chemicals.py
+```
+
+📖 **Chi tiết:** [tools/SCRIPTS_GUIDE.md](../tools/SCRIPTS_GUIDE.md#3-calculate_chemicalspy---tính-hóa-chất)
+
 ## Mô Tả
 
 Command này sẽ:

@@ -276,12 +276,65 @@ Ví dụ:
 - Phiếu_20250202_151230
 ```
 
-## TOOLS & SCRIPTS
+## 🛠️ TOOLS & SCRIPTS
 
-Sử dụng:
-- `/tools/scripts/google_sheets_api.py` - Google Sheets API
-- `/tools/scripts/purchase_order_creator.py` - Logic tạo phiếu
-- `/tools/scripts/utils.py` - Utilities
+**⚠️ CRITICAL: LUÔN SỬ DỤNG SCRIPT CÓ SẴN!**
+
+### Primary Script
+
+**create_purchase_order.py** - Canonical script cho tạo phiếu mua hàng
+
+**Cách chạy:**
+```bash
+cd BO_KHO_MUA_HANG_THEO_TARGET
+python tools/scripts/create_purchase_order.py
+```
+
+**Input:**
+- File comparison JSON (từ inventory_comparator.py)
+- User input: requester name, content
+
+**Output:**
+- Google Sheet: "Phiếu_YYYYMMDD_HHMMSS"
+- Metadata: Saved to "Phiếu Mua Hàng" và "Chi Tiết Phiếu Mua Hàng"
+- JSON file: `workspace/purchase_orders/phieu_YYYYMMDD_HHMMSS.json`
+
+### How to Use in Agent
+
+**STEP 1: Always check if script exists**
+```bash
+ls tools/scripts/create_purchase_order.py
+```
+
+**STEP 2: Run the script (DO NOT reimplement!)**
+```bash
+python tools/scripts/create_purchase_order.py
+```
+
+**STEP 3: Display result link**
+```markdown
+✅ Đã tạo Phiếu Mua Hàng thành công!
+
+🔗 [Mở Phiếu](https://docs.google.com/spreadsheets/d/1y18Hm-QYHzt5PrdiisPKxmWQidVNEBaG2NthP5Fc800)
+
+📋 Sheet: Phiếu_20250104_145000
+```
+
+### ❌ NEVER DO THIS:
+- ❌ Reimplement purchase order creation logic yourself
+- ❌ Use deprecated `purchase_order_creator.py`
+- ❌ Write new code to copy templates without checking for existing scripts first
+- ❌ Skip saving metadata to tracking sheets
+
+### ✅ ALWAYS DO THIS:
+- ✅ Check tools/scripts/ directory first
+- ✅ Use create_purchase_order.py for ALL purchase order creation
+- ✅ Ensure comparison file exists before running
+- ✅ Follow the script's input/output format
+
+### Dependencies
+- `google_sheets_api.py` - Google Sheets API (imported by script)
+- Comparison JSON file from inventory_comparator.py
 
 ## REFERENCES
 

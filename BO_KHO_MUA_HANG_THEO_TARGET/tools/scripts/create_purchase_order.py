@@ -43,7 +43,6 @@ def load_comparison_results(file_path):
         print(f"[INFO] Goi DV: {data.get('goi_dv', 'N/A')}")
         print(f"[INFO] Tong loai: {data['summary']['tong_loai']}")
         print(f"[INFO] Can mua: {data['summary']['can_mua']} loai")
-        print(f"[INFO] Het kho: {data['summary']['het_kho']} loai")
         print(f"[INFO] Du kho: {data['summary']['du_kho']} loai")
 
         return data
@@ -60,7 +59,7 @@ def filter_items_to_purchase(items):
     """
     can_mua_list = [
         item for item in items
-        if item['trang_thai'] in ['CẦN MUA', 'HẾT KHO']
+        if item['trang_thai'] in ['CAN MUA', 'HET KHO']
     ]
 
     print(f"[INFO] Loc duoc {len(can_mua_list)} items CAN MUA/HET KHO")
@@ -81,8 +80,9 @@ def create_purchase_order_sheet(spreadsheet_id, comparison_data, template_name):
     print("\n[INFO] BAT DAU TAO PHIEU MUA HANG TU TEMPLATE...")
 
     # Loc items can mua
-    items = comparison_data.get('items', [])
-    can_mua_list = filter_items_to_purchase(items)
+    # Data tu inventory_comparator.py co 'can_mua' va 'du_kho'
+    can_mua_items = comparison_data.get('can_mua', [])
+    can_mua_list = filter_items_to_purchase(can_mua_items)
 
     if not can_mua_list:
         print("[INFO] Tat ca deu DU KHO, khong can tao phieu!")

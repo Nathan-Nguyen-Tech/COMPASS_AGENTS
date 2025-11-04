@@ -230,12 +230,60 @@ with open(output_file, 'w', encoding='utf-8') as f:
 - Số loại CẦN MUA
 - Số loại ĐỦ KHO
 
-## TOOLS & SCRIPTS
+## 🛠️ TOOLS & SCRIPTS
 
-Sử dụng:
-- `/tools/scripts/inventory_comparator.py` - Logic so sánh
-- `/tools/scripts/utils.py` - Hàm normalize, roundup
+**⚠️ CRITICAL: LUÔN SỬ DỤNG SCRIPT CÓ SẴN!**
+
+### Primary Script
+
+**inventory_comparator.py** - Canonical script cho so sánh tồn kho
+
+**Cách chạy:**
+```bash
+cd BO_KHO_MUA_HANG_THEO_TARGET
+python tools/scripts/inventory_comparator.py
+```
+
+**Input:**
+- File calculation (VTTH hoặc Hóa Chất JSON)
+- File inventory (Excel .xlsx hoặc CSV .csv)
+
+**Output:**
+- `workspace/calculations/comparison_YYYYMMDD_HHMMSS.json`
+
+### How to Use in Agent
+
+**STEP 1: Always check if script exists**
+```bash
+ls tools/scripts/inventory_comparator.py
+```
+
+**STEP 2: Run the script (DO NOT reimplement!)**
+```bash
+python tools/scripts/inventory_comparator.py
+```
+
+**STEP 3: Parse and display results**
+```python
+import json
+with open('workspace/calculations/comparison_latest.json') as f:
+    results = json.load(f)
+    # Display results to user
+```
+
+### ❌ NEVER DO THIS:
+- ❌ Reimplement comparison logic yourself
+- ❌ Use deprecated `inventory_comparison.py`
+- ❌ Write new comparison code without checking for existing scripts first
+
+### ✅ ALWAYS DO THIS:
+- ✅ Check tools/scripts/ directory first
+- ✅ Use inventory_comparator.py for all comparisons
+- ✅ Follow the script's input/output format
+
+### Dependencies
 - `pandas` - Đọc và xử lý file Excel/CSV
+- `google_sheets_api.py` - API wrapper (if needed)
 
 ## REFERENCES
 
