@@ -2,6 +2,19 @@
 
 Tính toán nhu cầu Vật Tư Tiêu Hao (VTTH) theo số lượng khách hàng và gói dịch vụ.
 
+## 🛠️ SCRIPT AVAILABLE
+
+**⚠️ CRITICAL: Đã có script Python sẵn để chạy command này!**
+
+**LUÔN SỬ DỤNG SCRIPT CÓ SẴN TRƯỚC KHI VIẾT CODE MỚI!**
+
+```bash
+cd BO_KHO_MUA_HANG_THEO_TARGET
+python tools/scripts/calculator.py
+```
+
+📖 **Chi tiết:** [tools/SCRIPTS_GUIDE.md](../tools/SCRIPTS_GUIDE.md#2-calculatorpy---tính-vtth-vật-tư-tiêu-hao)
+
 ## Mô Tả
 
 Command này sẽ:

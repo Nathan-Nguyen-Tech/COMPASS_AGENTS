@@ -2,6 +2,19 @@
 
 Tạo phiếu mua hàng tự động trong Google Sheets từ template.
 
+## 🛠️ SCRIPT AVAILABLE
+
+**⚠️ CRITICAL: Đã có script Python sẵn để chạy command này!**
+
+**LUÔN SỬ DỤNG SCRIPT CÓ SẴN TRƯỚC KHI VIẾT CODE MỚI!**
+
+```bash
+cd BO_KHO_MUA_HANG_THEO_TARGET
+python tools/scripts/create_purchase_order.py
+```
+
+📖 **Chi tiết:** [tools/SCRIPTS_GUIDE.md](../tools/SCRIPTS_GUIDE.md#5-create_purchase_orderpy---tạo-phiếu-mua-hàng--canonical)
+
 ## Mô Tả
 
 Command này sẽ:

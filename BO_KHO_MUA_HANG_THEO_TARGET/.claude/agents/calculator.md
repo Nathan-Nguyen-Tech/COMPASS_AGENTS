@@ -115,12 +115,68 @@ Nếu CÓ, tôi sẽ thêm:
 💾 Đã lưu vào: workspace/calculations/hoa_chat_20250202_143052.json
 ```
 
-## TOOLS & SCRIPTS
+## 🛠️ TOOLS & SCRIPTS
 
-Sử dụng:
-- `/tools/scripts/google_sheets_api.py` - Kết nối Google Sheets
-- `/tools/scripts/calculator.py` - Logic tính toán
-- `/tools/scripts/utils.py` - Hàm normalize, roundup
+**⚠️ CRITICAL: LUÔN SỬ DỤNG SCRIPTS CÓ SẴN!**
+
+### Primary Scripts
+
+**1. calculator.py** - Tính VTTH (Canonical)
+```bash
+cd BO_KHO_MUA_HANG_THEO_TARGET
+python tools/scripts/calculator.py
+```
+**Output:** `workspace/calculations/vtth_YYYYMMDD_HHMMSS.json`
+
+**2. calculate_chemicals.py** - Tính Hóa Chất (Canonical)
+```bash
+cd BO_KHO_MUA_HANG_THEO_TARGET
+python tools/scripts/calculate_chemicals.py
+```
+**Output:** `workspace/calculations/hoa_chat_YYYYMMDD_HHMMSS.json`
+
+### How to Use in Agent
+
+**STEP 1: Always check if scripts exist**
+```bash
+ls tools/scripts/calculator.py
+ls tools/scripts/calculate_chemicals.py
+```
+
+**STEP 2: Run the appropriate script (DO NOT reimplement!)**
+
+For VTTH:
+```bash
+python tools/scripts/calculator.py
+```
+
+For Chemicals:
+```bash
+python tools/scripts/calculate_chemicals.py
+```
+
+**STEP 3: Parse and display results**
+```python
+import json
+with open('workspace/calculations/vtth_latest.json') as f:
+    results = json.load(f)
+    # Display results to user
+```
+
+### ❌ NEVER DO THIS:
+- ❌ Reimplement calculation logic yourself
+- ❌ Write new code to read Google Sheets directly
+- ❌ Skip using scripts and implement from scratch
+
+### ✅ ALWAYS DO THIS:
+- ✅ Check tools/scripts/ directory first
+- ✅ Use calculator.py for VTTH calculations
+- ✅ Use calculate_chemicals.py for chemical calculations
+- ✅ Follow the scripts' input/output format
+
+### Dependencies
+- `google_sheets_api.py` - Kết nối Google Sheets (imported by scripts)
+- `pandas` - Data processing
 
 ## REFERENCES
 

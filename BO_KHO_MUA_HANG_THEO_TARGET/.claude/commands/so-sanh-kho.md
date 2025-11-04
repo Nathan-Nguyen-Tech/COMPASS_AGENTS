@@ -2,6 +2,19 @@
 
 So sánh kết quả đã tính (VTTH hoặc Hóa Chất) với file tồn kho để xác định số lượng cần mua.
 
+## 🛠️ SCRIPT AVAILABLE
+
+**⚠️ CRITICAL: Đã có script Python sẵn để chạy command này!**
+
+**LUÔN SỬ DỤNG SCRIPT CÓ SẴN TRƯỚC KHI VIẾT CODE MỚI!**
+
+```bash
+cd BO_KHO_MUA_HANG_THEO_TARGET
+python tools/scripts/inventory_comparator.py
+```
+
+📖 **Chi tiết:** [tools/SCRIPTS_GUIDE.md](../tools/SCRIPTS_GUIDE.md#4-inventory_comparatorpy---so-sánh-tồn-kho--canonical)
+
 ## Mô Tả
 
 Command này sẽ:
