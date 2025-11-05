@@ -1,0 +1,18 @@
+# B2B Customer Dashboard - Python Dependencies
+
+# Core data processing
+pandas>=2.1.0
+
+# Visualization
+plotly>=5.18.0
+
+# Optional: For enhanced data analysis
+numpy>=1.24.0
+
+# Web server for interactive dashboard
+flask>=3.0.0
+flask-cors>=4.0.0
+
+# Google Sheets API access
+google-auth>=2.25.0
+google-api-python-client>=2.110.0

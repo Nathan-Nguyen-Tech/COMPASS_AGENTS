@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DASHBOARD BD - Potential Customer Analytics</title>
+
+    <!-- Plotly.js -->
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --success-gradient: linear-gradient(135deg, #43e97b 0%, #38d39f 100%);
+            --danger-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            --info-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .dashboard-header {
+            background: var(--primary-gradient);
+            color: white;
+            padding: 30px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .dashboard-header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .dashboard-header p {
+            font-size: 1rem;
+            opacity: 0.95;
+            margin: 0;
+        }
+
+        .control-panel {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .control-panel h5 {
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 20px;
+        }
+
+        .btn-apply-filter {
+            background: var(--primary-gradient);
+            border: none;
+            color: white;
+            padding: 10px 30px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: transform 0.2s;
+        }
+
+        .btn-apply-filter:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-refresh {
+            background: var(--danger-gradient);
+            border: none;
+            color: white;
+            padding: 10px 30px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: transform 0.2s;
+        }
+
+        .btn-refresh:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(250, 112, 154, 0.4);
+        }
+
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .chart-container {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .chart-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .footer {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            color: #6b7280;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .footer p {
+            margin: 5px 0;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .status-success {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        @media (max-width: 768px) {
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .dashboard-header h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <!-- Header -->
+        <div class="dashboard-header">
+            <h1>📊 DASHBOARD BD - Potential Customer Analytics</h1>
+            <p>Comprehensive B2B Customer Pipeline Analysis</p>
+        </div>
+
+        <!-- Control Panel -->
+        <div class="control-panel">
+            <h5>🎛️ Dashboard Controls</h5>
+            <div class="row g-3 align-items-end">
+                <div class="col-md-2">
+                    <label class="form-label">Dashboard Type</label>
+                    <select class="form-select" id="dashboardType">
+                        <option value="monthly">Theo Tháng</option>
+                        <option value="quarterly">Theo Quý</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label">Năm</label>
+                    <select class="form-select" id="yearFilter">
+                        <option value="">Tất cả</option>
+                        <option value="2025">2025</option>
+                        <option value="2026">2026</option>
+                    </select>
+                </div>
+                <div class="col-md-2" id="monthFilterContainer">
+                    <label class="form-label">Tháng</label>
+                    <select class="form-select" id="monthFilter">
+                        <option value="">Tất cả</option>
+                        <option value="1">Tháng 1</option>
+                        <option value="2">Tháng 2</option>
+                        <option value="3">Tháng 3</option>
+                        <option value="4">Tháng 4</option>
+                        <option value="5">Tháng 5</option>
+                        <option value="6">Tháng 6</option>
+                        <option value="7">Tháng 7</option>
+                        <option value="8">Tháng 8</option>
+                        <option value="9">Tháng 9</option>
+                        <option value="10">Tháng 10</option>
+                        <option value="11">Tháng 11</option>
+                        <option value="12">Tháng 12</option>
+                    </select>
+                </div>
+                <div class="col-md-2" id="quarterFilterContainer" style="display: none;">
+                    <label class="form-label">Quý</label>
+                    <select class="form-select" id="quarterFilter">
+                        <option value="">Tất cả</option>
+                        <option value="1">Quý 1</option>
+                        <option value="2">Quý 2</option>
+                        <option value="3">Quý 3</option>
+                        <option value="4">Quý 4</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-apply-filter w-100" onclick="applyFilters()">
+                        🔍 Áp dụng Filter
+                    </button>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-refresh w-100" onclick="refreshData()">
+                        🔄 Refresh Data
+                    </button>
+                </div>
+            </div>
+            <div class="mt-3">
+                <span class="status-badge status-success">
+                    Type: Monthly
+                </span>
+            </div>
+        </div>
+
+        <!-- Charts Grid -->
+        <div class="charts-grid">
+            <div class="chart-container">
+                <div id="chart1"></div>
+            </div>
+            <div class="chart-container">
+                <div id="chart2"></div>
+            </div>
+            <div class="chart-container">
+                <div id="chart3"></div>
+            </div>
+            <div class="chart-container">
+                <div id="chart4"></div>
+            </div>
+            <div class="chart-container">
+                <div id="chart5"></div>
+            </div>
+            <div class="chart-container">
+                <div id="chart6"></div>
+            </div>
+            <div class="chart-container">
+                <div id="chart7"></div>
+            </div>
+            <div class="chart-container">
+                <div id="chart8"></div>
+            </div>
+            <div class="chart-container" style="grid-column: span 2;">
+                <div id="chart9"></div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p><strong>Last Updated:</strong> 2025-11-05 08:14:53</p>
+            <p><strong>Data Source:</strong> Google Sheets - 2025_B2B_PotentialCustomersManagement_Upgrade</p>
+            <p><strong>Total Records:</strong> 1632</p>
+        </div>
+    </div>
+
+    <script>
+        // Chart data (injected by Python)
+        const chart1Data = {"data": [{"type": "bar", "orientation": "h", "x": [1348, 79, 67, 43, 27, 14], "y": ["Small (Under 100 employees)", "Middle (From 100 - 300)", "Small (Under 50 employees)", "Middle (From 50 - 100)", "Large (Above 300)", "Large (Above 100)"], "text": ["1348 (85.4%)", "79 (5.0%)", "67 (4.2%)", "43 (2.7%)", "27 (1.7%)", "14 (0.9%)"], "textposition": "outside", "marker": {"color": ["#bfdbfe", "#93c5fd", "#60a5fa", "#3b82f6", "#2563eb", "#1d4ed8"], "line": {"color": "#fff", "width": 1}}, "hovertemplate": "<b>%{y}</b><br>Số lượng: %{x}<br>%{text}<extra></extra>"}], "layout": {"title": {"text": "Phân bố Quy mô Công ty", "font": {"size": 16, "color": "#111827", "family": "Inter"}}, "xaxis": {"title": "Số lượng công ty"}, "yaxis": {"title": ""}, "margin": {"l": 150, "r": 50, "t": 60, "b": 60}, "height": 400, "font": {"family": "Inter", "size": 12, "color": "#374151"}}, "config": {"responsive": true, "displayModeBar": true, "displaylogo": false, "modeBarButtonsToRemove": ["lasso2d", "select2d"], "toImageButtonOptions": {"format": "png", "filename": "b2b_chart", "height": 800, "width": 1200, "scale": 2}}};
+        const chart2Data = {"data": [{"type": "bar", "orientation": "h", "x": [857, 632, 99, 36, 7, 1], "y": ["Jun-2025k", "2025 - Lost Customer", "3. In-need", "Signedup Contract - 2025", "2. Qualified", "1. Potential"], "text": ["857 (52.5%)", "632 (38.7%)", "99 (6.1%)", "36 (2.2%)", "7 (0.4%)", "1 (0.1%)"], "textposition": "outside", "marker": {"color": ["#667eea", "#f093fb", "#4facfe", "#43e97b", "#fa709a", "#fee140", "#30cfd0", "#c471ed", "#f38181", "#95e1d3"], "line": {"color": "#fff", "width": 1}}, "hovertemplate": "<b>%{y}</b><br>Số lượng: %{x}<br>%{text}<extra></extra>"}], "layout": {"title": {"text": "Trạng thái Khách hàng (Top 10)", "font": {"size": 16, "color": "#111827", "family": "Inter"}}, "xaxis": {"title": "Số lượng"}, "yaxis": {"title": ""}, "margin": {"l": 180, "r": 50, "t": 60, "b": 60}, "height": 450, "font": {"family": "Inter", "size": 12, "color": "#374151"}}, "config": {"responsive": true, "displayModeBar": true, "displaylogo": false, "modeBarButtonsToRemove": ["lasso2d", "select2d"], "toImageButtonOptions": {"format": "png", "filename": "b2b_chart", "height": 800, "width": 1200, "scale": 2}}};
+        const chart3Data = {"data": [{"type": "bar", "x": ["0-50M", "50-100M", "100-200M", "200-500M", "500M+"], "y": [1231, 225, 95, 53, 12], "text": ["1231", "225", "95", "53", "12"], "textposition": "outside", "marker": {"color": ["#bbf7d0", "#86efac", "#4ade80", "#22c55e", "#16a34a", "#15803d"], "line": {"color": "#fff", "width": 1}}, "hovertemplate": "<b>%{x}</b><br>Số lượng: %{y}<extra></extra>"}], "layout": {"title": {"text": "Phân bố Giá trị Hợp đồng", "font": {"size": 16, "color": "#111827", "family": "Inter"}}, "xaxis": {"title": "Khoảng giá trị (VND)"}, "yaxis": {"title": "Số lượng hợp đồng"}, "margin": {"l": 60, "r": 50, "t": 60, "b": 80}, "height": 400, "font": {"family": "Inter", "size": 12, "color": "#374151"}}, "config": {"responsive": true, "displayModeBar": true, "displaylogo": false, "modeBarButtonsToRemove": ["lasso2d", "select2d"], "toImageButtonOptions": {"format": "png", "filename": "b2b_chart", "height": 800, "width": 1200, "scale": 2}}};
+        const chart4Data = {"data": [{"type": "bar", "x": ["Current Data", "JobBoard - Srap Data", "Google maps", "Sales - Personal Network", "Current Data Qualified Org Q1", "Curent Data Qualified Org Q4 <10km", "Office Building", "Khu Công Nghiệp Tân Bình", "Others"], "y": [1121, 130, 130, 87, 54, 29, 24, 9, 48], "text": ["1121", "130", "130", "87", "54", "29", "24", "9", "48"], "textposition": "outside", "marker": {"color": ["#667eea", "#f093fb", "#4facfe", "#43e97b", "#fa709a", "#fee140", "#30cfd0", "#c471ed", "#f38181"], "line": {"color": "#fff", "width": 1}}, "hovertemplate": "<b>%{x}</b><br>Số lượng: %{y}<extra></extra>"}], "layout": {"title": {"text": "Phân bố Nguồn Khách hàng (Top 8)", "font": {"size": 16, "color": "#111827", "family": "Inter"}}, "xaxis": {"title": "Nguồn", "tickangle": -45}, "yaxis": {"title": "Số lượng"}, "margin": {"l": 60, "r": 50, "t": 60, "b": 120}, "height": 400, "font": {"family": "Inter", "size": 12, "color": "#374151"}}, "config": {"responsive": true, "displayModeBar": true, "displaylogo": false, "modeBarButtonsToRemove": ["lasso2d", "select2d"], "toImageButtonOptions": {"format": "png", "filename": "b2b_chart", "height": 800, "width": 1200, "scale": 2}}};
+        const chart5Data = {"data": [{"type": "bar", "orientation": "h", "x": [412, 358, 129, 127, 98, 97, 62, 55, 55, 52], "y": ["2. District Tan Binh", "District 1", "District 3", "1. District Tan Phu", "6. District Phu Nhuan", "District Binh Thanh", "3. District Binh Tan", "4. District 10", "District Thu Duc", "District 7"], "text": ["412", "358", "129", "127", "98", "97", "62", "55", "55", "52"], "textposition": "outside", "marker": {"color": ["#fed7aa", "#fdba74", "#fb923c", "#f97316", "#ea580c", "#c2410c"], "line": {"color": "#fff", "width": 1}}, "hovertemplate": "<b>%{y}</b><br>Số lượng: %{x}<extra></extra>"}], "layout": {"title": {"text": "Top 10 Quận theo Số lượng Công ty", "font": {"size": 16, "color": "#111827", "family": "Inter"}}, "xaxis": {"title": "Số lượng công ty"}, "yaxis": {"title": ""}, "margin": {"l": 150, "r": 50, "t": 60, "b": 60}, "height": 450, "font": {"family": "Inter", "size": 12, "color": "#374151"}}, "config": {"responsive": true, "displayModeBar": true, "displaylogo": false, "modeBarButtonsToRemove": ["lasso2d", "select2d"], "toImageButtonOptions": {"format": "png", "filename": "b2b_chart", "height": 800, "width": 1200, "scale": 2}}};
+        const chart6Data = {"data": [{"type": "bar", "x": ["0-2M", "2M-5M", "5M-10M", "10M+"], "y": [933, 43, 1, 0], "text": ["933", "43", "1", ""], "textposition": "outside", "marker": {"color": ["#e9d5ff", "#d8b4fe", "#c084fc", "#a855f7", "#9333ea", "#7e22ce"], "line": {"color": "#fff", "width": 1}}, "hovertemplate": "<b>%{x}</b><br>Số lượng: %{y}<extra></extra>"}], "layout": {"title": {"text": "Phân bố Ngân sách AHCU", "font": {"size": 16, "color": "#111827", "family": "Inter"}}, "xaxis": {"title": "Khoảng ngân sách (VND)"}, "yaxis": {"title": "Số lượng"}, "margin": {"l": 60, "r": 50, "t": 60, "b": 80}, "height": 400, "font": {"family": "Inter", "size": 12, "color": "#374151"}}, "config": {"responsive": true, "displayModeBar": true, "displaylogo": false, "modeBarButtonsToRemove": ["lasso2d", "select2d"], "toImageButtonOptions": {"format": "png", "filename": "b2b_chart", "height": 800, "width": 1200, "scale": 2}}};
+        const chart7Data = {"data": [{"type": "bar", "orientation": "h", "x": [372, 97, 45, 42, 23, 20, 19, 9, 9, 8], "y": ["Clinic - Location", "Last vendor", "Clinic - Lack of Services Providing", "Clinic - Size", "Long term contract", "Relationship of BOD", "Clinic - Medical/ Customer Service", "New Brand/ Lack of Trust", "Missing Timeline Approach", "Economy Effect"], "text": ["372", "97", "45", "42", "23", "20", "19", "9", "9", "8"], "textposition": "outside", "marker": {"color": ["#fecaca", "#fca5a5", "#f87171", "#ef4444", "#dc2626", "#b91c1c"], "line": {"color": "#fff", "width": 1}}, "hovertemplate": "<b>%{customdata}</b><br>Số lượng: %{x}<extra></extra>", "customdata": ["Clinic - Location", "Last vendor", "Clinic - Lack of Services Providing", "Clinic - Size", "Long term contract", "Relationship of BOD", "Clinic - Medical/ Customer Service", "New Brand/ Lack of Trust", "Missing Timeline Approach", "Economy Effect"]}], "layout": {"title": {"text": "Lý do Thất bại Deals (Top 10)", "font": {"size": 16, "color": "#111827", "family": "Inter"}}, "xaxis": {"title": "Số lượng"}, "yaxis": {"title": ""}, "margin": {"l": 250, "r": 50, "t": 60, "b": 60}, "height": 450, "font": {"family": "Inter", "size": 11, "color": "#374151"}}, "config": {"responsive": true, "displayModeBar": true, "displaylogo": false, "modeBarButtonsToRemove": ["lasso2d", "select2d"], "toImageButtonOptions": {"format": "png", "filename": "b2b_chart", "height": 800, "width": 1200, "scale": 2}}};
+        const chart8Data = {"data": [{"type": "scatter", "mode": "lines+markers", "x": ["2024-06", "2024-07", "2024-10", "2025-03", "2025-04", "2025-05", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12"], "y": [20.0, 10.0, 21.0, 15.0, 80.0, 7.5, 52.0, 67.5, 45.0, 22.0, 20.0], "text": ["20M", "10M", "21M", "15M", "80M", "8M", "52M", "68M", "45M", "22M", "20M"], "textposition": "top center", "line": {"color": "#667eea", "width": 3, "shape": "spline"}, "marker": {"size": 10, "color": "#667eea", "line": {"color": "#fff", "width": 2}}, "hovertemplate": "<b>%{x}</b><br>Doanh thu: %{y:.0f}M VND<extra></extra>"}], "layout": {"title": {"text": "Xu hướng Doanh thu theo Tháng", "font": {"size": 16, "color": "#111827", "family": "Inter"}}, "xaxis": {"title": "Thời gian", "tickangle": -45}, "yaxis": {"title": "Doanh thu (Million VND)"}, "margin": {"l": 80, "r": 50, "t": 60, "b": 100}, "height": 400, "font": {"family": "Inter", "size": 12, "color": "#374151"}}, "config": {"responsive": true, "displayModeBar": true, "displaylogo": false, "modeBarButtonsToRemove": ["lasso2d", "select2d"], "toImageButtonOptions": {"format": "png", "filename": "b2b_chart", "height": 800, "width": 1200, "scale": 2}}};
+        const chart9Data = {"data": [{"type": "funnel", "y": ["1. Prospecting (10%)", "2. Proposal (30%)", "3. Meeting/Tour (50%)", "4. Negotiation (70%)", "5. Verbal Confirm (90%)", "6. Closed (100%)"], "x": [1365, 171, 47, 4, 7, 38], "text": ["1365 (83.6%)", "171 (10.5%)", "47 (2.9%)", "4 (0.2%)", "7 (0.4%)", "38 (2.3%)"], "textposition": "inside", "textinfo": "value+percent initial", "marker": {"color": ["#667eea", "#764ba2", "#f093fb", "#43e97b", "#22c55e", "#16a34a"]}, "connector": {"line": {"color": "#374151", "width": 2}}, "hovertemplate": "<b>%{y}</b><br>Số lượng: %{x}<br>Tỷ lệ: %{text}<extra></extra>"}], "layout": {"title": {"text": "Sales Funnel - Pipeline Overview", "font": {"size": 16, "color": "#111827", "family": "Inter"}}, "margin": {"l": 180, "r": 100, "t": 60, "b": 60}, "height": 500, "font": {"family": "Inter", "size": 12, "color": "#374151"}}, "config": {"responsive": true, "displayModeBar": true, "displaylogo": false, "modeBarButtonsToRemove": ["lasso2d", "select2d"], "toImageButtonOptions": {"format": "png", "filename": "b2b_chart", "height": 800, "width": 1200, "scale": 2}}};
+
+        // Render all charts
+        function renderCharts() {
+            Plotly.newPlot('chart1', chart1Data.data, chart1Data.layout, chart1Data.config);
+            Plotly.newPlot('chart2', chart2Data.data, chart2Data.layout, chart2Data.config);
+            Plotly.newPlot('chart3', chart3Data.data, chart3Data.layout, chart3Data.config);
+            Plotly.newPlot('chart4', chart4Data.data, chart4Data.layout, chart4Data.config);
+            Plotly.newPlot('chart5', chart5Data.data, chart5Data.layout, chart5Data.config);
+            Plotly.newPlot('chart6', chart6Data.data, chart6Data.layout, chart6Data.config);
+            Plotly.newPlot('chart7', chart7Data.data, chart7Data.layout, chart7Data.config);
+            Plotly.newPlot('chart8', chart8Data.data, chart8Data.layout, chart8Data.config);
+            Plotly.newPlot('chart9', chart9Data.data, chart9Data.layout, chart9Data.config);
+        }
+
+        // Toggle month/quarter filters
+        document.getElementById('dashboardType').addEventListener('change', function() {
+            const type = this.value;
+            const monthContainer = document.getElementById('monthFilterContainer');
+            const quarterContainer = document.getElementById('quarterFilterContainer');
+
+            if (type === 'monthly') {
+                monthContainer.style.display = 'block';
+                quarterContainer.style.display = 'none';
+            } else {
+                monthContainer.style.display = 'none';
+                quarterContainer.style.display = 'block';
+            }
+        });
+
+        // API base URL (change if server runs on different port)
+        const API_BASE = window.location.origin.includes('localhost:5000') ?
+                         'http://localhost:5000' : '';
+
+        // Show loading overlay
+        function showLoading(message) {
+            let overlay = document.getElementById('loadingOverlay');
+            if (!overlay) {
+                overlay = document.createElement('div');
+                overlay.id = 'loadingOverlay';
+                overlay.style.cssText = `
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(0, 0, 0, 0.8);
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    z-index: 9999;
+                    color: white;
+                    font-size: 1.5rem;
+                    font-weight: 600;
+                `;
+                document.body.appendChild(overlay);
+            }
+            overlay.innerHTML = `
+                <div style="text-align: center;">
+                    <div class="spinner-border text-light mb-3" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <div>${message}</div>
+                </div>
+            `;
+            overlay.style.display = 'flex';
+        }
+
+        // Hide loading overlay
+        function hideLoading() {
+            const overlay = document.getElementById('loadingOverlay');
+            if (overlay) {
+                overlay.style.display = 'none';
+            }
+        }
+
+        // Check generation status and reload when done
+        function checkGenerationStatus(intervalId) {
+            fetch(`${API_BASE}/api/status`)
+                .then(response => response.json())
+                .then(status => {
+                    if (status.is_generating) {
+                        showLoading(status.progress || 'Generating dashboard...');
+                    } else {
+                        clearInterval(intervalId);
+                        if (status.error) {
+                            hideLoading();
+                            alert('Error: ' + status.error);
+                        } else {
+                            // Success - reload page to show new dashboard
+                            showLoading('Dashboard generated! Reloading...');
+                            setTimeout(() => {
+                                window.location.reload();
+                            }, 1000);
+                        }
+                    }
+                })
+                .catch(error => {
+                    clearInterval(intervalId);
+                    hideLoading();
+                    console.error('Status check failed:', error);
+                });
+        }
+
+        // Apply filters function
+        async function applyFilters() {
+            const type = document.getElementById('dashboardType').value;
+            const year = document.getElementById('yearFilter').value;
+            const month = document.getElementById('monthFilter').value;
+            const quarter = document.getElementById('quarterFilter').value;
+
+            // Build request body
+            const requestBody = { type };
+            if (year) requestBody.year = parseInt(year);
+            if (type === 'monthly' && month) requestBody.month = parseInt(month);
+            if (type === 'quarterly' && quarter) requestBody.quarter = parseInt(quarter);
+
+            try {
+                showLoading('Starting dashboard generation...');
+
+                const response = await fetch(`${API_BASE}/api/generate`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(requestBody)
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    // Start polling for status
+                    const intervalId = setInterval(() => checkGenerationStatus(intervalId), 2000);
+                } else {
+                    hideLoading();
+                    alert('Error: ' + (result.error || 'Failed to start generation'));
+                }
+            } catch (error) {
+                hideLoading();
+                alert('Error calling API: ' + error.message +
+                      '\n\nMake sure the API server is running:\npython tools/scripts/dashboard_api_server.py');
+            }
+        }
+
+        // Refresh data function
+        async function refreshData() {
+            const type = document.getElementById('dashboardType').value;
+            const year = document.getElementById('yearFilter').value;
+            const month = document.getElementById('monthFilter').value;
+            const quarter = document.getElementById('quarterFilter').value;
+
+            if (!confirm('This will fetch fresh data from Google Sheets. Continue?')) {
+                return;
+            }
+
+            // Build request body
+            const requestBody = { type };
+            if (year) requestBody.year = parseInt(year);
+            if (type === 'monthly' && month) requestBody.month = parseInt(month);
+            if (type === 'quarterly' && quarter) requestBody.quarter = parseInt(quarter);
+
+            try {
+                showLoading('Fetching data from Google Sheets...');
+
+                const response = await fetch(`${API_BASE}/api/refresh`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(requestBody)
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    // Start polling for status
+                    const intervalId = setInterval(() => checkGenerationStatus(intervalId), 2000);
+                } else {
+                    hideLoading();
+                    alert('Error: ' + (result.error || 'Failed to start refresh'));
+                }
+            } catch (error) {
+                hideLoading();
+                alert('Error calling API: ' + error.message +
+                      '\n\nMake sure the API server is running:\npython tools/scripts/dashboard_api_server.py');
+            }
+        }
+
+        // Render charts on page load
+        window.addEventListener('load', function() {
+            renderCharts();
+        });
+
+        // Make charts responsive
+        window.addEventListener('resize', function() {
+            Plotly.Plots.resize('chart1');
+            Plotly.Plots.resize('chart2');
+            Plotly.Plots.resize('chart3');
+            Plotly.Plots.resize('chart4');
+            Plotly.Plots.resize('chart5');
+            Plotly.Plots.resize('chart6');
+            Plotly.Plots.resize('chart7');
+            Plotly.Plots.resize('chart8');
+            Plotly.Plots.resize('chart9');
+        });
+    </script>
+</body>
+</html>

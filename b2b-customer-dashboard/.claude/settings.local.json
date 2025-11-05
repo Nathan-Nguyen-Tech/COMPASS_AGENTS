@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python tools/scripts/dashboard_generator.py:*)",
+      "Bash(start workspacedashboardsgenerateddashboard.html)",
+      "Bash(python tools/scripts/generate_full_dashboard.py:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

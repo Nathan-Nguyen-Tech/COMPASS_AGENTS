@@ -1,0 +1,27 @@
+{
+  "projectInfo": {
+    "name": "B2B Customer Dashboard",
+    "version": "1.0.0",
+    "description": "Interactive web dashboard for analyzing B2B potential customer data from Google Sheets"
+  },
+  "allowed": {
+    "shell": [
+      "python tools/scripts/dashboard_generator.py:*",
+      "python tools/scripts/serve_dashboard.py:*",
+      "python -m http.server:8000"
+    ],
+    "read": [
+      "workspace/**",
+      "tools/**",
+      "context/**"
+    ],
+    "write": [
+      "workspace/dashboards/**",
+      "tools/scripts/**"
+    ]
+  },
+  "mcp": {
+    "enabled": true,
+    "autoStart": true
+  }
+}
